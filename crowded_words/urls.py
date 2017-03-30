@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from scrape import views as S
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^', S.cloud, name='cloud')
 ]
