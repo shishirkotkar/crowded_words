@@ -19,5 +19,7 @@ from scrape import views as S
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'analyze', S.analyze, name='analyze'),
     url(r'^', S.cloud, name='cloud')
+
 ]
