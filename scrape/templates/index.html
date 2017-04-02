@@ -67,22 +67,62 @@
 
     <!-- Page Content -->
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h6 class="mt-4">Upload a text file to view word cloud built using D3</h6>
-                <input type="file" id="files" name="files[]" onchange="startRead()"/>
-                <output id="list"></output>
+        <div class="row" style="font-size: 14px">
+            <div class="col-lg-6 text-center">
+                <div class="card mt-3">
+                    <div class="card-block" style="height: 100px">
+                        <div class="form-group">
+                        <h6>Upload A Text File To View Word Cloud Built Using D3</h6>
+                        <input type="file" id="files" name="files[]" onchange="startRead()"/>
+                        <output id="list"></output>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="card mt-3">
+                    <div class="card-block" style="height: 100px">
+                        <div class="form-group">
+                            <h6>Scrape Data from A URL And Build A Word Cloud</h6>
+                            <div class="row">
+                                <div class="col-md-8"><input style="height: 30px; margin-left:20px" type="text" class="form-control" id="url"></div>
+                                <div class="col-md-4">
+                                    <button style="height: 30px ;font-size:12px ; font-weight: bold" type="button" class="btn btn-secondary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-md-12 text-center">
-                <div id="wordCloudChart"></div>
+        <ul class="nav nav-tabs mt-4">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#cloud">Cloud</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#info">Info</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="cloud" role="tabpanel">
+                <div class="row" style="text-align: center">
+                    <div class="col-md-12" style="text-align: center;">
+                        <div id="wordCloudChart" style="text-align: center"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="info" role="tabpanel">
+                <h4>info</h4>
             </div>
         </div>
+
     </div>
 
+
+
     <!-- jQuery Version 3.1.1 -->
-    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <!-- Tether -->
     <script src="{% static 'js/tether.min.js' %}"></script>
     <!-- D3 Js-->
@@ -103,10 +143,10 @@
 
     function loaded(evt) {
         var fileString = evt.target.result;
-        alert("File Loaded Successfully" + fileString);
         sendDataToBackend(fileString);
     }
 
+    var table_data = [];
     function sendDataToBackend(fileString) {
 
         $.ajax({
@@ -115,11 +155,13 @@
             data: {'data': fileString},
             dataType: 'json',
             success: function (d) {
+                table_data = d['frequency_list'];
                 drawWordCloud(d['frequency_list']);
             }
         });
 
     }
+
 
 </script>
 

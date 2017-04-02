@@ -77,7 +77,7 @@ class DataAdapter(object):
     def top_100_words(self, data=None):
         df = pandas.DataFrame(data)
         df = df.sort('size', ascending=False)
-        df = df.head(n=100)
+        df = df.head(n=200)
         return df.T.to_dict().values()
 
     def get_json(self):

@@ -9,7 +9,7 @@ var color = d3.scale.linear()
 
 function drawWordCloud(frequencyList) {
 
-    d3.layout.cloud().size([600, 300])
+    d3.layout.cloud().size([700, 300])
         .words(frequencyList)
         .rotate(0)
         .fontSize(function (d) {
@@ -22,7 +22,7 @@ function drawWordCloud(frequencyList) {
 
 function draw(words) {
     d3.select("#wordCloudChart").append("svg")
-        .attr("width", 650)
+        .attr("width", 750)
         .attr("height", 350)
         .attr("class", "wordcloud")
         .append("g")
