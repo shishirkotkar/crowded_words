@@ -9,7 +9,7 @@ var color = d3.scale.linear()
 
 function drawWordCloud(frequencyList) {
 
-    d3.layout.cloud().size([800, 300])
+    d3.layout.cloud().size([600, 300])
         .words(frequencyList)
         .rotate(0)
         .fontSize(function (d) {

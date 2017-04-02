@@ -1,7 +1,7 @@
 import json
 from nltk.corpus import stopwords
 from collections import Counter
-
+import pandas
 
 class DataProcessor(object):
 
@@ -33,7 +33,13 @@ class DataProcessor(object):
         return False
 
     def is_stop_word(self, word=None):
-        if word in self.stop_words:
+        if word.lower() in self.stop_words:
+            return True
+        return False
+
+    def is_bad_word(self, word=None):
+        bad_words = ['also']
+        if word.lower() in bad_words:
             return True
         return False
 
@@ -44,7 +50,8 @@ class DataProcessor(object):
             try:
                 if any([self.is_stop_word(word),
                         self.is_alpha_numeric(word=word),
-                        self.word_has_special_characters(word=word)]):
+                        self.word_has_special_characters(word=word),
+                        self.is_bad_word(word=word)]):
                     continue
                 else:
                     filtered_words.append(word)
@@ -67,6 +74,13 @@ class DataAdapter(object):
                 output.append({'text': word, 'size': freq})
         return output
 
+    def top_100_words(self, data=None):
+        df = pandas.DataFrame(data)
+        df = df.sort('size', ascending=False)
+        df = df.head(n=100)
+        return df.T.to_dict().values()
+
     def get_json(self):
         data = self.build_data()
-        return json.dumps({'data': data})
+        top_100 = self.top_100_words(data=data)
+        return json.dumps({'frequency_list': top_100})
