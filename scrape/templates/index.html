@@ -69,7 +69,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h6 class="mt-4">Upload a text file to view word cloud build using D3</h6>
+                <h6 class="mt-4">Upload a text file to view word cloud built using D3</h6>
                 <input type="file" id="files" name="files[]" onchange="startRead()"/>
                 <output id="list"></output>
             </div>
@@ -83,16 +83,12 @@
 
     <!-- jQuery Version 3.1.1 -->
     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
-
     <!-- Tether -->
     <script src="{% static 'js/tether.min.js' %}"></script>
-
     <!-- D3 Js-->
     <script src="http://d3js.org/d3.v3.min.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
     <script src="{% static 'js/wordCloud.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/drawCloud.js' %}" type="text/javascript"></script>
 
@@ -111,10 +107,7 @@
         sendDataToBackend(fileString);
     }
 
-    var processedData = undefined;
     function sendDataToBackend(fileString) {
-
-//        var inputData = JSON.stringify(fileString);
 
         $.ajax({
             type: "POST",
@@ -122,7 +115,7 @@
             data: {'data': fileString},
             dataType: 'json',
             success: function (d) {
-                processedData = JSON.parse(d);
+                drawWordCloud(d['frequency_list']);
             }
         });
 
