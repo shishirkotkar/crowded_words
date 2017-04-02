@@ -21,6 +21,7 @@ function drawWordCloud(frequencyList) {
 
 
 function draw(words) {
+    d3.select("#wordCloudChart svg").remove();
     d3.select("#wordCloudChart").append("svg")
         .attr("width", 750)
         .attr("height", 350)
