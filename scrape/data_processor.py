@@ -1,4 +1,6 @@
+import json
 from nltk.corpus import stopwords
+from collections import Counter
 
 
 class DataProcessor(object):
@@ -35,7 +37,7 @@ class DataProcessor(object):
             return True
         return False
 
-    def run(self):
+    def get_words(self):
         filtered_words = []
         words = self.process_string()
         for word in words:
@@ -50,3 +52,21 @@ class DataProcessor(object):
                 continue
         return filtered_words
 
+
+class DataAdapter(object):
+
+    def __init__(self, data_processor=None):
+        self.data_processor = data_processor
+
+    def build_data(self):
+        words = self.data_processor.get_words()
+        count = Counter(words)
+        output = []
+        for word, freq in count.items():
+            if freq >= 5:
+                output.append({'text': word, 'size': freq})
+        return output
+
+    def get_json(self):
+        data = self.build_data()
+        return json.dumps({'data': data})
